@@ -46,7 +46,7 @@ class ParseQueriesFile {
                     "subtitle"=> $section['description'],
                     "arg"=> $section['code'],
                     "autocomplete"=> '...',
-                    "icon" => 'icon.png',
+                    "icon" => 'assets/db.png',
                     "valid" => "yes"
                 ];
         }

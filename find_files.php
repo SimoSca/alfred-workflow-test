@@ -27,7 +27,7 @@ class FindQueriesFiles {
                     "subtitle"=> "is_file",
                     "arg"=> $projectFolder .'/' . $file,
                     "autocomplete"=> $file,
-                    "icon" => 'icon.png',
+                    "icon" => 'assets/file.png',
                     "valid" => "no"
                 ];
             }
