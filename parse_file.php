@@ -10,9 +10,11 @@ class ParseQueriesFile {
         
         // var_dump('file', $file);
 
+        $this->file = $file;
+
         $text = file_get_contents($file);
         
-        preg_match_all('/#### *([^\r?\n]+)\r?\n(.+)````[^\r?\n]*\r?\n(.*)````/misU', $text, $matches);
+        preg_match_all('/#### *([^\r?\n]+)\r?\n(.+)````?[^\r?\n]*\r?\n(.*)````?/misU', $text, $matches);
 
         // var_dump('match', $matches);
 
@@ -64,7 +66,7 @@ class ParseQueriesFile {
         $wf = new Workflows();
 
         if($this->countMatch() == 0) {
-            $wf->result("999","","File has not queries...", "bad file", 'icon.png', 'no');
+            $wf->result("999","","File " . $this->file . " has not sections...", "bad file", 'icon.png', 'no');
         }else{
             foreach($this->matchList as $item){
                 $wf->result( $item["uid"] ,$item["arg"] ,$item["title"] , $item["subtitle"], $item["icon"], $item["valid"], $item["autocomplete"] );

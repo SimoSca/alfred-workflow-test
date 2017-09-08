@@ -31,6 +31,29 @@
 				<false/>
 			</dict>
 		</array>
+		<key>FE3620E3-DAD4-42BE-971A-1DA514844F8B</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>F9D770A0-9CAB-4071-BD4E-9AB939E503C9</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>BA28A16D-4311-44FA-8195-2DD87BE952EA</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 	</dict>
 	<key>createdby</key>
 	<string>Enomis Inodracs</string>
@@ -88,28 +111,10 @@
 				<string>searching....</string>
 				<key>script</key>
 				<string>
-include_once("find_files.php");
-include_once("parse_file.php");
+include_once("mysql.php");
 
-$search = explode(' ', trim("{query}") );
 
-$matchFile = $search[0];
-
-$matchQuery = $search[1];
-
-$foundFile = new FindQueriesFiles($_ENV['projectFolder'], $matchFile );
-
-if(is_null($matchQuery) || $foundFile-&gt;countMatch() === 0){
-
-	// print $foundFile
-	$foundFile-&gt;printList();
-
-}else if ($foundFile-&gt;countMatch() === 1 || is_file($_ENV['projectFolder'] . '/' . $matchFile)){
-	$file = $foundFile-&gt;returnUnique();
-	$parsedFile = new ParseQueriesFile($file);
-	$parsedFile-&gt;printList();
-}
-
+startMysql(trim("{query}"));
 
 
 </string>
@@ -150,6 +155,96 @@ if(is_null($matchQuery) || $foundFile-&gt;countMatch() === 0){
 			<key>version</key>
 			<integer>2</integer>
 		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<false/>
+				<key>removeextension</key>
+				<false/>
+				<key>text</key>
+				<string>{query}</string>
+				<key>title</key>
+				<string>Display</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>F9D770A0-9CAB-4071-BD4E-9AB939E503C9</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>0</integer>
+				<key>keyword</key>
+				<string>sh</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>searching....</string>
+				<key>script</key>
+				<string>
+include_once("shell.php");
+
+
+startShell(trim("{query}"));
+
+
+</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>find terminal commands</string>
+				<key>title</key>
+				<string>Systemist</string>
+				<key>type</key>
+				<integer>1</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>FE3620E3-DAD4-42BE-971A-1DA514844F8B</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>autopaste</key>
+				<false/>
+				<key>clipboardtext</key>
+				<string>{query}</string>
+				<key>transient</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>BA28A16D-4311-44FA-8195-2DD87BE952EA</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
 	</array>
 	<key>readme</key>
 	<string>Workflow for detecting mysql collection</string>
@@ -176,11 +271,34 @@ if(is_null($matchQuery) || $foundFile-&gt;countMatch() === 0){
 			<key>ypos</key>
 			<integer>110</integer>
 		</dict>
+		<key>BA28A16D-4311-44FA-8195-2DD87BE952EA</key>
+		<dict>
+			<key>xpos</key>
+			<integer>750</integer>
+			<key>ypos</key>
+			<integer>550</integer>
+		</dict>
+		<key>F9D770A0-9CAB-4071-BD4E-9AB939E503C9</key>
+		<dict>
+			<key>xpos</key>
+			<integer>750</integer>
+			<key>ypos</key>
+			<integer>420</integer>
+		</dict>
+		<key>FE3620E3-DAD4-42BE-971A-1DA514844F8B</key>
+		<dict>
+			<key>xpos</key>
+			<integer>300</integer>
+			<key>ypos</key>
+			<integer>480</integer>
+		</dict>
 	</dict>
 	<key>variables</key>
 	<dict>
-		<key>projectFolder</key>
+		<key>mysqlFolder</key>
 		<string>/Users/simonescardoni/Working/wlogo/Mixed/mysql</string>
+		<key>shellFolder</key>
+		<string>/Users/simonescardoni/Working/wlogo/Mixed/shell</string>
 	</dict>
 	<key>version</key>
 	<string>0.1</string>

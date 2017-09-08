@@ -7,16 +7,18 @@ class FindQueriesFiles {
 
     private $matchList = [];
 
-    public function __construct($projectFolder, $query){
+    public function __construct($projectFolder, $query, $matchName){
         
-        // used into returnUnique
-        $this->defaultFile = $projectFolder . '/' . $query;
+        
 
         $files = scandir($projectFolder);
         
         foreach($files as $file) {    
             //do your work here
-            if( preg_match('/queries/i', $file) && preg_match('/'.$query.'/i', $file) ){
+            if( preg_match('/'.$matchName.'/i', $file) && preg_match('/'.$query.'/i', $file) ){
+
+
+                // var_dump($file);
 
                 $count = count( $this->matchList );
 
@@ -33,7 +35,9 @@ class FindQueriesFiles {
             }
         } 
 
-        
+        // used into returnUnique
+        $file = $projectFolder . '/' . $query ;
+        $this->defaultFile = is_file($file) ? $file : $this->matchList[0]["arg"];
 
     }
 
@@ -54,11 +58,11 @@ class FindQueriesFiles {
             }
         }
 
-        echo $wf->toxml();
+        return $wf->toxml();
     }
 
     public function returnUnique(){
-        return $this->countMatch[0] ? $this->countMatch[0] : $this->defaultFile ;
+        return $this->defaultFile ;
     }
 
 }// end class
